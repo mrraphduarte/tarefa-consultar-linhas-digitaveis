@@ -1,5 +1,8 @@
 
-const { converterLinhaParaCódigo, validarInfoCodigo } = require("./titulosBancario")
+const { converterLinhaParaCódigoTB, validarInfoCodigoTP } = require("./titulosBancario")
+const { converterLinhaParaCódigoPC, validarInfoCodigoPC } = require("./pagamentosConcessionarias")
+const { TIPO_BOLETOS } = require("./const")
+const { errosGerais } = require("./constError")
 
 exports.validacoesInfoBoleto = function(idBoleto){
     
@@ -12,25 +15,27 @@ exports.validacoesInfoBoleto = function(idBoleto){
 function validacoesGerais(linhaValidar){
    
     let infoBoleto = null
+    let { tituloBancario, pagamentoConcessionarias} = TIPO_BOLETOS
 
     if ((linhaValidar.toUpperCase().match(/[A-Z]/) != null) || linhaValidar.match(/\s/g))
-        throw Error("Dados do boleto informados incorretamente, a cadeia deve possuir apenas números, por favor verifique se a cadeia possui espaços e/ou letras.")
+        throw Error(errosGerais.espacoBrancoLetras)
 
-    if(![47, 48].includes(linhaValidar.length))
-        throw Error("Por favor verifique o tipo de boleto a ser enviado: títulos bancários ou pagamentos de concessionárias")
+    if(![tituloBancario.quantidadeCaracter, pagamentoConcessionarias.quantidadeCaracter].includes(linhaValidar.length))
+        throw Error(errosGerais.quantidadeCarater)
 
-    if(linhaValidar.length === 47){
+    if(linhaValidar.length === tituloBancario.quantidadeCaracter){
         
         //BOLETO PADRAO VALIDACAO 47 CARACTER LINHA DIGITAVEL
         // TODO: títulos bancários  
-        let retornoInfoCode = converterLinhaParaCódigo(linhaValidar)
-    
-        infoBoleto = validarInfoCodigo(linhaValidar, retornoInfoCode)
+        let retornoInfoCode = converterLinhaParaCódigoTB(linhaValidar)
+        infoBoleto = validarInfoCodigoTP(linhaValidar, retornoInfoCode)
 
     } else {
 
         //BOLETO CONCEISSIONARIA 48 CARACTER LINHA DIGITAVEL
         // TODO pagamentos de concessionárias
+        let retornoInfoCode = converterLinhaParaCódigoPC(linhaValidar)
+        infoBoleto = validarInfoCodigoPC(retornoInfoCode)
     }
     
     return infoBoleto
