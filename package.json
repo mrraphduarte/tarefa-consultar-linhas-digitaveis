@@ -1,0 +1,22 @@
+{
+  "name": "tarefa-consultar-linhas-digitaveis",
+  "version": "1.0.0",
+  "description": "Tarefa para consulta linhas digitaveis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js",
+    "start": "node --no-warnings ./index.js"
+  },
+  "author": "Raphael Duarte",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "restify": "^8.6.1",
+    "restify-cors-middleware2": "^2.1.2",
+    "restify-https": "^0.0.3"
+  }
+}
