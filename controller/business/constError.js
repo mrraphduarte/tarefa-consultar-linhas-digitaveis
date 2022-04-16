@@ -10,7 +10,9 @@ const titulosBancarios = {
 }
 
 const pagamentoConcessionaria = {
-    codigoBarras: "Dígito verificador do código de barras incorreto, entrar em contato com time de sistemas"
+    DACModulo10: "Dígito verificador do código de barras incorreto (DAC Módulo 10), entrar em contato com time de sistemas",
+    DACModulo11: "Dígito verificador do código de barras incorreto (DAC Módulo 11), entrar em contato com time de sistemas",
+    moduloDesconhecido: "Módulo DAC desconhecido, por favor verifique os dados informados da linha digitável."
 }
 
 exports.errosGerais = errosGerais

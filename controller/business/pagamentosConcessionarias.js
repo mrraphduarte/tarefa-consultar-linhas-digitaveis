@@ -1,4 +1,4 @@
-const { DETERMINANTE_DAC_MODULO_10, DETERMINANTE_DAC_MODULO_11 } = require("./const")
+const { DETERMINANTE_DAC_MODULO_10, DETERMINANTE_DAC_MODULO_11, TIPO_MODULO } = require("./const")
 const { pagamentoConcessionaria } = require("./constError")
 
 exports.converterLinhaParaCódigoPC = function(linha){
@@ -14,6 +14,7 @@ exports.converterLinhaParaCódigoPC = function(linha){
     
     return {
         codigoBarras: posicao1 + posicao2 + posicao3 + posicao4, 
+        codigoMoeda: linha.substr(2,1),
         digitosVerificadosres:{
             primeiro: digitoVerificador1, 
             segundo: digitoVerificador2, 
@@ -25,17 +26,33 @@ exports.converterLinhaParaCódigoPC = function(linha){
 
 exports.validarInfoCodigoPC = function(infoCD){
 
-    let { codigoBarras } = infoCD
+    let { codigoBarras, codigoMoeda } = infoCD
+    let { DAC_MODULO_10, DAC_MODULO_11 } = TIPO_MODULO
 
-    let validadorCodeBarMod10 = calculoComposicaoDigitoVerificadorMod10(codigoBarras, DETERMINANTE_DAC_MODULO_10.determinante)
-    let validadorCodeBarMod11 = calculoComposicaoDigitoVerificadorMod11(codigoBarras, DETERMINANTE_DAC_MODULO_11.determinante)
-    
-    
-    if(validadorCodeBarMod10 || validadorCodeBarMod11){
-        return BuscarValoresCodigoBarras(codigoBarras)
+    let validadorCodeBarMod = false
+
+    if(DAC_MODULO_10.includes(codigoMoeda)){
+
+        validadorCodeBarMod = calculoComposicaoDigitoVerificadorMod10(codigoBarras)
+        
+        if(!validadorCodeBarMod){
+            throw Error(pagamentoConcessionaria.DACModulo10)
+        }
+        
+    }else if(DAC_MODULO_11.includes(codigoMoeda)){
+        
+        validadorCodeBarMod = calculoComposicaoDigitoVerificadorMod11(codigoBarras)
+       
+        if(!validadorCodeBarMod){
+            throw Error(pagamentoConcessionaria.DACModulo11)
+        }
+       
+    }else{
+        throw Error(pagamentoConcessionaria.moduloDesconhecido)
     }
-
-    throw Error(pagamentoConcessionaria.codigoBarras)
+    
+    return BuscarValoresCodigoBarras(codigoBarras)
+    
 }
 
 function calculoComposicaoDigitoVerificadorMod10(codigoBarras){
@@ -61,7 +78,7 @@ function calculoComposicaoDigitoVerificadorMod10(codigoBarras){
 
     let resto = valorComposicao % determinante
     let valorDigito = determinante - resto
-    let resultadoDigitoValidador = valorDigito
+    let resultadoDigitoValidador = valorDigito.toString()
 
     if(DETERMINANTE_DAC_MODULO_10.restoCondicional.includes(resto)){
     
@@ -91,7 +108,7 @@ function calculoComposicaoDigitoVerificadorMod11(codigoBarras){
 
     let resto = valorComposicao % determinante
     let valorDigito = determinante - resto
-    let resultadoDigitoValidador = valorDigito
+    let resultadoDigitoValidador = valorDigito.toString()
 
     if(DETERMINANTE_DAC_MODULO_11.restoCondicional_0.includes(resto)){
         
@@ -108,18 +125,15 @@ function calculoComposicaoDigitoVerificadorMod11(codigoBarras){
 
 function BuscarValoresCodigoBarras(codigoBarras){
 
-    let valor = codigoBarras.substr(9,10)
-    let fatorVencimento = parseInt(codigoBarras.substr(5,4)) - 1000
+    let valor = codigoBarras.substr(5,11)
+    let fatorVencimento = codigoBarras.substr(19,8)
 
-    let dataVencimento = new Date(2000, 07, 03)
-    dataVencimento = new Date(dataVencimento.setDate(dataVencimento.getDate() + fatorVencimento))
-   
     valor = `${parseFloat(valor.substr(0, 8))}.${valor.substr(8, 2)}`
     
     return{
         barCode: codigoBarras,
         amount: valor,
-        expirationDate: `${dataVencimento.getFullYear().toString().padStart(4, '0')}-${dataVencimento.getMonth().toString().padStart(2, '0')}-${dataVencimento.getDate().toString().padStart(2, '0')}`
+        expirationDate: `${fatorVencimento.substr(0, 4)}-${fatorVencimento.substr(4, 2)}-${fatorVencimento.substr(6, 2)}`
     }  
 }
 
