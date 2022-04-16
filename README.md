@@ -38,6 +38,14 @@ Challenge for the selection process of the company EWally
 
 <html><br /></html>
 
+# Chamada manual (GET - url)
+  ### Iniciar serviço
+```js
+  http://localhost:8080/boleto/{idBoleto}
+```
+
+<html><br /></html>
+
 # Rodando testes unitários
   ### Iniciar serviço
 ```js
