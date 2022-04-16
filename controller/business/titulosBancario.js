@@ -1,5 +1,5 @@
 
-const { DETERMINANTE_DIVISAO_TP, DETERMINANTE_SUBTRACAO_COD_BARRAS_TP } = require("./const")
+const { DETERMINANTE_SUBTRACAO_COD_BARRAS_TP } = require("./const")
 const { titulosBancarios } = require("./constError")
 
 exports.converterLinhaParaCódigoTB = function(linha){
