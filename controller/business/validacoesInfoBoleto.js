@@ -26,14 +26,12 @@ function validacoesGerais(linhaValidar){
     if(linhaValidar.length === tituloBancario.quantidadeCaracter){
         
         //BOLETO PADRAO VALIDACAO 47 CARACTER LINHA DIGITAVEL
-        // TODO: títulos bancários  
         let retornoInfoCode = converterLinhaParaCódigoTB(linhaValidar)
         infoBoleto = validarInfoCodigoTP(linhaValidar, retornoInfoCode)
 
     } else {
 
         //BOLETO CONCEISSIONARIA 48 CARACTER LINHA DIGITAVEL
-        // TODO pagamentos de concessionárias
         let retornoInfoCode = converterLinhaParaCódigoPC(linhaValidar)
         infoBoleto = validarInfoCodigoPC(retornoInfoCode)
     }

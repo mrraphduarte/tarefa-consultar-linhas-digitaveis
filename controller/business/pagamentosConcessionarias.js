@@ -127,13 +127,20 @@ function BuscarValoresCodigoBarras(codigoBarras){
 
     let valor = codigoBarras.substr(5,11)
     let fatorVencimento = codigoBarras.substr(19,8)
-
+    let dataValidade = {}
+    
     valor = `${parseFloat(valor.substr(0, 8))}.${valor.substr(8, 2)}`
+
+    if(new Date(fatorVencimento.substr(0, 4),fatorVencimento.substr(4, 2),fatorVencimento.substr(6, 2)) >= new Date(2000, 07, 03)){
+        dataValidade = {
+            expirationDate: `${fatorVencimento.substr(0, 4)}-${fatorVencimento.substr(4, 2)}-${fatorVencimento.substr(6, 2)}`
+        }
+    }
     
     return{
         barCode: codigoBarras,
         amount: valor,
-        expirationDate: `${fatorVencimento.substr(0, 4)}-${fatorVencimento.substr(4, 2)}-${fatorVencimento.substr(6, 2)}`
+        ...dataValidade
     }  
 }
 
