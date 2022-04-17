@@ -32,16 +32,15 @@ Challenge for the selection process of the company EWally
 # Start projeto: Subindo o servidor
   ### subir serviço
 ```js
-  npm run start
-  npm run dev
+  npm run start (produção) ou npm run dev (homologação)
 ```
 
 <html><br /></html>
 
 # Chamada manual (GET - url)
-  ### Iniciar serviço
+  ### url
 ```js
-  http://localhost:8080/boleto/{idBoleto}
+  http://localhost:8080/boleto/'Linha digitável'
 ```
 
 <html><br /></html>
