@@ -47,7 +47,7 @@ exports.validarInfoCodigoTP = function(linhaDigitavel, infoCD){
     }
 
     if(!validadorCodeBar){
-        throw Error(titulosBancarios.titulosBancarios)
+        throw Error(titulosBancarios.codigoBarras)
     }
 
     return BuscarValoresCodigoBarras(codigoBarras)
@@ -110,7 +110,7 @@ function BuscarValoresCodigoBarras(codigoBarras){
     let valor = codigoBarras.substr(9,10)
     let fatorVencimento = parseInt(codigoBarras.substr(5,4)) - 1000
 
-    let dataVencimento = new Date(2000, 07, 03)
+    let dataVencimento = new Date(2000, 7, 3)
     dataVencimento = new Date(dataVencimento.setDate(dataVencimento.getDate() + fatorVencimento))
    
     valor = `${parseFloat(valor.substr(0, 8))}.${valor.substr(8, 2)}`

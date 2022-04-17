@@ -4,15 +4,7 @@ const { converterLinhaParaCódigoPC, validarInfoCodigoPC } = require("./pagament
 const { TIPO_BOLETOS } = require("./const")
 const { errosGerais } = require("./constError")
 
-exports.validacoesInfoBoleto = function(idBoleto){
-    
-    let infoBoleto = validacoesGerais(idBoleto)
-
-    return infoBoleto
-        
-}
-
-function validacoesGerais(linhaValidar){
+exports.validacoesInfoBoleto = function(linhaValidar){
    
     let infoBoleto = null
     let { tituloBancario, pagamentoConcessionarias} = TIPO_BOLETOS

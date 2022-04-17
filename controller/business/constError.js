@@ -1,5 +1,4 @@
 const errosGerais = {
-    payloadIncorreto: "Dados do boleto não encontrados, por favor informe corretamente a linha digitável",
     espacoBrancoLetras: "Dados do boleto informados incorretamente, a cadeia deve possuir apenas números, por favor verifique se a cadeia possui espaços e/ou letras.",
     quantidadeCarater: "Por favor verifique o tipo de boleto a ser enviado: títulos bancários ou pagamentos de concessionárias"
 }

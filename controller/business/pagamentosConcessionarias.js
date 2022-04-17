@@ -131,7 +131,7 @@ function BuscarValoresCodigoBarras(codigoBarras){
     
     valor = `${parseFloat(valor.substr(0, 8))}.${valor.substr(8, 2)}`
 
-    if(new Date(fatorVencimento.substr(0, 4),fatorVencimento.substr(4, 2),fatorVencimento.substr(6, 2)) >= new Date(2000, 07, 03)){
+    if(new Date(fatorVencimento.substr(0, 4),fatorVencimento.substr(4, 2),fatorVencimento.substr(6, 2)) >= new Date(2000, 7, 3)){
         dataValidade = {
             expirationDate: `${fatorVencimento.substr(0, 4)}-${fatorVencimento.substr(4, 2)}-${fatorVencimento.substr(6, 2)}`
         }
